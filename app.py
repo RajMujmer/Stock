@@ -88,8 +88,8 @@ for ticker in tickers:
     for _ in range(30):
         pred = model.predict(X_future)
         future_preds.append(pred[0][0])
-        X_future = np.append(X_future[:,1:,:], [[pred]], axis=1)
-
+        X_future = np.append(X_future[:,1:,:], pred.reshape(1,1,1), axis=1)
+        
     future_preds = scaler.inverse_transform(np.array(future_preds).reshape(-1,1))
     future_dates = pd.date_range(data.index[-1] + timedelta(days=1), periods=30)
 
